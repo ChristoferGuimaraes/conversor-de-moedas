@@ -5,18 +5,28 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="style.css" rel="stylesheet">
     <title>Conversor de Moedas</title>
 </head>
 
 <body>
-    <div id="currencies-container">
-        <select id="currency-one" class="form-select"></select>
-        <select id="currency-two" class="form-select"></select>
-    </div>
-    <input id="currency-one-times" min="1" type="number" value='1' >
-    <div id="converted-value"></div>
-    <div id="conversion-precision"></div>
-<script src="app.js"></script>
+    <header>
+        <h1>Conversor de moedas</h1>
+    </header>
+    <section id="main">
+        <div id="currencies-container">
+            <select id="currency-one" class="form-select"></select>
+            to
+            <select id="currency-two" class="form-select"></select>
+        </div>
+        
+        <input id="currency-one-times" min="1" type="number" value='1'>
+        
+        <div id="converted-value"></div>
+        
+        <div id="conversion-precision"></div>
+    </section>
+    <script src="app.js"></script>
 </body>
 
 </html>
