@@ -33,8 +33,8 @@ header {
 
 #main {
   margin: 0 auto;
-  margin-top: 40px;
-  width: 333px;
+  margin-top: 200px;
+  width: 355px;
   border: 2px solid;
   text-align: center;
   padding: 20px;
@@ -44,30 +44,68 @@ header {
 }
 
 select {
-  width: 35%;
+  margin-top: 20px;
+  width: 38%;
   border: none;
   border: solid 1px;
   border-radius: 6px;
   padding: 3px;
+  outline: none;
+  display: inline-block;
+  text-align: center;
+}
+
+i {
+    margin: 0px 20px
+}
+
+i:hover {
+    color:rgb(94, 94, 94)
 }
 
 input {
-  width: 100%;
+  width: 92%;
   outline: none;
-  border-radius: 10px;
+  border-radius: 6px;
   border: none;
   border: 1px solid;
   box-shadow: 1px 1px 2px rgba(0, 0, 0, 0.178);
   padding: 3px 10px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.473);
+  margin: 10px;
+  padding: 4px;
 }
 
-#converted-value,
-#currency-one-times {
+#converted-value {
   display: block;
   margin: 10px 0px;
 }
 
 #converted-value {
   font-weight: bold;
-  font-size: 22px;
+  font-size: 27px;
+}
+
+span {
+  cursor: pointer;
+  display: inline-block;
+  border: 1px solid;
+  border-radius: 4px;
+  padding: 0px 5px;
+  background-color: rgba(255, 0, 0, 0.699);
+  color: white;
+}
+
+.alert {
+  display: block;
+  padding: 10px;
+  border: 1px solid rgba(255, 0, 0, 0.699);
+  border-radius: 5px;
+  background-color: rgba(255, 0, 0, 0.699);
+  text-align: left;
+  margin: 20px 0px;
+  box-shadow: 1px 1px 3px rgba(0, 0, 0, 0.473);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
 }

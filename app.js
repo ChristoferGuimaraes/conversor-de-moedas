@@ -4,6 +4,9 @@ const currencies = document.querySelector("#currencies-container");
 const convertedValue = document.querySelector('#converted-value');
 const convertedPrecision = document.querySelector('#conversion-precision');
 const currencyTimesOne = document.querySelector('#currency-one-times');
+const currencySwap = document.querySelector('#currency-swap');
+let currencyOneT = currencyOne;
+let currencyTwoT = currencyTwo;
 
 let internalExchangeRate = {}
 
@@ -24,7 +27,8 @@ const getErrorMessage = (errorType) =>
   }[errorType] || "Não foi possível obter as informações");
 
 const fetchExchangeRate = async url => {
-  try {
+  
+    try {
     const response = await fetch(url);
     
     if (!response.ok) {
@@ -38,6 +42,7 @@ const fetchExchangeRate = async url => {
       throw new Error(getErrorMessage(exchangeRateData["error-type"]));
     }
     return exchangeRateData;
+
 } catch (err) {
 
     const div = document.createElement('div');
@@ -72,29 +77,49 @@ const init = async () => {
     currencyOne.innerHTML = getOptions('USD');
     currencyTwo.innerHTML = getOptions('BRL');
 
-    convertedValue.textContent = internalExchangeRate.conversion_rates.BRL.toFixed(2);
+    convertedValue.textContent = `${internalExchangeRate.conversion_rates.BRL.toFixed(2)} BRL`;
     convertedPrecision.textContent = `1 ${currencyOne.value} = ${internalExchangeRate.conversion_rates.BRL} BRL`;
-
 
 }
 
 currencyTimesOne.addEventListener('input', e  => {
-    convertedValue.textContent = (e.target.value * internalExchangeRate.conversion_rates[currencyTwo.value]).toFixed(2)
+    convertedValue.textContent = `${(e.target.value * internalExchangeRate.conversion_rates[currencyTwo.value]).toFixed(2)} ${currencyTwo.value}`;
+     
 });
 
 currencyTwo.addEventListener('input', e => {
     const currencyTwoValue = internalExchangeRate.conversion_rates[e.target.value];
 
-    convertedValue.textContent = (currencyTimesOne.value * currencyTwoValue).toFixed(2);
+    convertedValue.textContent = `${(currencyTimesOne.value * currencyTwoValue).toFixed(2)} ${currencyTwo.value}`;
     convertedPrecision.textContent = `1 ${currencyOne.value} = ${currencyTwoValue} ${currencyTwo.value}`
+
 })
 
 currencyOne.addEventListener('input', async e => {
-
+    
     internalExchangeRate = { ...(await fetchExchangeRate(getUrl(e.target.value))) };
 
-    convertedValue.textContent = (currencyTimesOne.value * internalExchangeRate.conversion_rates[currencyTwo.value]).toFixed(2);
+    convertedValue.textContent = `${(currencyTimesOne.value * internalExchangeRate.conversion_rates[currencyTwo.value]).toFixed(2)} ${currencyTwo.value}`;
     convertedPrecision.textContent = `1 ${currencyOne.value} = ${internalExchangeRate.conversion_rates[currencyTwo.value]} ${currencyTwo.value}`
+
+})
+
+currencySwap.addEventListener('click', async () => {
+    
+    internalExchangeRate = { ...(await fetchExchangeRate(getUrl(`${currencyTwoT.value}`))) };
+
+    const getOptions = selectedCurrency => Object.keys(internalExchangeRate.conversion_rates)
+    .map(currency => `<option ${currency === selectedCurrency ? 'selected' : ''}>${currency}</option>`)
+    .join('')
+    
+    currencyOneT.innerHTML = getOptions(currencyOneT.value);
+    currencyTwoT.innerHTML = getOptions(currencyTwoT.value);
+
+    [ currencyOneT.value, currencyTwoT.value ] = [ currencyTwoT.value, currencyOneT.value ];
+
+    convertedValue.textContent = `${(currencyTimesOne.value * internalExchangeRate.conversion_rates[currencyTwoT.value]).toFixed(2)} ${currencyTwoT.value}`;
+    convertedPrecision.textContent = `1 ${currencyOneT.value} = ${internalExchangeRate.conversion_rates[currencyTwoT.value]} ${currencyTwoT.value}`
+
 })
 
 init();
